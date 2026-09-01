@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI 프롬프트 퀴즈</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- 시작 화면 -->
+<section id="screen-start" class="screen active">
+  <div class="start-card">
+    <h1>AI 프롬프트 퀴즈</h1>
+    <p class="lead">원본과 결과를 비교하고<br />빠진 프롬프트 블록을 완성해 보세요.</p>
+    <div class="start-buttons">
+      <button class="btn btn-primary" data-difficulty="beginner">초급 시작</button>
+      <button class="btn btn-secondary" data-difficulty="intermediate">중급 시작</button>
+    </div>
+  </div>
+</section>
+
+<!-- 퀴즈 화면 -->
+<section id="screen-quiz" class="screen">
+  <header class="quiz-header">
+    <button class="btn-back" id="btn-home" title="처음으로">←</button>
+    <div class="quiz-header-info">
+      <span class="badge badge-diff" id="badge-diff">초급</span>
+      <span class="badge badge-cat" id="badge-cat">카테고리</span>
+      <span class="progress-text" id="progress-text">문제 1 / 5</span>
+    </div>
+    <div class="progress-bar"><div class="progress-bar-fill" id="progress-fill"></div></div>
+  </header>
+
+  <div class="flow-label">원본 → 프롬프트 → 결과</div>
+
+  <div class="quiz-board">
+    <div class="panel panel-original">
+      <h2>원본</h2>
+      <div class="panel-body" id="panel-original"></div>
+    </div>
+    <div class="panel panel-prompt">
+      <h2>프롬프트</h2>
+      <div class="panel-body" id="panel-prompt"></div>
+    </div>
+    <div class="panel panel-result" id="panel-result-wrap">
+      <h2>결과</h2>
+      <div class="panel-body" id="panel-result"></div>
+    </div>
+  </div>
+
+  <div class="tray-wrap">
+    <div class="tray" id="block-tray"></div>
+  </div>
+
+  <div class="learning-point" id="learning-point">
+    <strong>학습 포인트</strong>
+    <p id="learning-point-text"></p>
+    <button class="btn btn-primary" id="btn-next">다음 문제</button>
+  </div>
+
+  <div class="quiz-footer">
+    <button class="btn btn-ghost" id="btn-retry">다시 풀기</button>
+  </div>
+</section>
+
+<!-- 완료 화면 -->
+<section id="screen-complete" class="screen">
+  <div class="start-card">
+    <h1 id="complete-title">완료!</h1>
+    <p class="lead" id="complete-text">모든 문제를 풀었어요.</p>
+    <div class="start-buttons">
+      <button class="btn btn-primary" id="btn-restart-diff">다시 풀기</button>
+      <button class="btn btn-secondary" id="btn-other-diff">다른 난이도</button>
+      <button class="btn btn-ghost" id="btn-to-start">처음으로</button>
+    </div>
+  </div>
+</section>
+
+<div class="drag-ghost" id="drag-ghost"></div>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
