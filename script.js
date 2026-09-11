@@ -12,8 +12,8 @@ let dragState = null;
 let hoveredBlank = null;
 let audioCtx = null;
 
-// 화면의 난이도 버튼 값(beginner/intermediate) ↔ 문제팩의 difficulty 표기(초급/중급)
-const DIFF_LABEL = { beginner: "초급", intermediate: "중급" };
+// 화면의 난이도 버튼 값 ↔ 문제팩의 difficulty 표기
+const DIFF_LABEL = { beginner: "초급", intermediate: "중급", advanced: "심화" };
 
 async function loadQuestions() {
   const res = await fetch("./questions.json");
@@ -95,11 +95,9 @@ function nextQuestion() {
 }
 
 function completeDifficulty() {
-  const diffLabel = state.difficulty === "beginner" ? "초급" : "중급";
+  const diffLabel = DIFF_LABEL[state.difficulty];
   document.getElementById("complete-title").textContent = `${diffLabel} 완료!`;
   document.getElementById("complete-text").textContent = `${diffLabel} ${currentList().length}문제를 모두 풀었어요.`;
-  document.getElementById("btn-other-diff").textContent =
-    state.difficulty === "beginner" ? "중급 도전하기" : "초급 다시 보기";
   showScreen("screen-complete");
 }
 
@@ -301,7 +299,7 @@ function attachDrag(chip) {
 }
 
 function positionGhost(x, y) {
-  ghost.style.transform = `translate(${x - ghost.offsetWidth / 2}px, ${y - ghost.offsetHeight - 16}px)`;
+  ghost.style.transform = `translate(${x - ghost.offsetWidth / 2}px, ${y - ghost.offsetHeight / 2}px)`;
 }
 
 function updateHover(x, y) {
@@ -330,7 +328,7 @@ function handleDrop(x, y) {
 
   const expected = blank.dataset.answerId;
   if (dragState.answerId === expected) {
-    blank.textContent = dragState.text;
+    blank.textContent = `✓ ${dragState.text}`;
     blank.classList.add("filled");
     dragState.chip.classList.add("used");
     playSound("correct");
@@ -343,6 +341,10 @@ function handleDrop(x, y) {
 }
 
 function endDrag() {
+  if (hoveredBlank) {
+    hoveredBlank.classList.remove("drop-hover");
+    hoveredBlank = null;
+  }
   if (dragState) dragState.chip.classList.remove("dragging");
   ghost.classList.remove("active");
   dragState = null;
@@ -359,7 +361,7 @@ function onAllCorrect() {
   state.solved = true;
   const q = currentQuestion();
 
-  if (state.difficulty === "intermediate") {
+  if (state.difficulty !== "beginner") {
     renderResultPanel(q, true);
   }
   document.querySelector(".panel-original").classList.add("compare-glow");
@@ -433,9 +435,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("btn-next").addEventListener("click", nextQuestion);
   document.getElementById("btn-retry").addEventListener("click", retryQuestion);
   document.getElementById("btn-restart-diff").addEventListener("click", () => startDifficulty(state.difficulty));
-  document.getElementById("btn-other-diff").addEventListener("click", () =>
-    startDifficulty(state.difficulty === "beginner" ? "intermediate" : "beginner")
-  );
+  document.getElementById("btn-other-diff").addEventListener("click", goHome);
   document.getElementById("btn-to-start").addEventListener("click", goHome);
 
   try {
