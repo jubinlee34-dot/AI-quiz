@@ -8,6 +8,7 @@
   --color-text-dim: #6b6b85;
   --color-border: #e3e4f0;
   --color-success: #1fa971;
+  --color-correct: #b45309;
   --color-error: #e5484d;
   --radius-lg: 20px;
   --radius-md: 14px;
@@ -322,24 +323,32 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 92px;
+  min-width: 110px;
+  min-height: 44px;
+  max-width: calc(100% - 6px);
+  overflow-wrap: anywhere;
   padding: 4px 10px;
   margin: 2px 3px;
-  border: 2px dashed #b9b9e6;
+  border: 3px dashed #8585bd;
   border-radius: 999px;
   background: #f4f4fd;
-  color: #9a9ac2;
+  color: #595980;
   font-weight: 700;
-  font-size: 0.92rem;
+  font-size: 1.05rem;
   vertical-align: middle;
   transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
 }
-.blank.drop-hover { border-color: var(--color-primary); background: #eceaff; }
+.blank.drop-hover {
+  border-color: var(--color-primary-dark);
+  background: #dcd6ff;
+  box-shadow: 0 0 0 3px rgba(68, 68, 209, 0.25);
+}
 .blank.filled {
+  transition: none;
   border-style: solid;
-  border-color: var(--color-success);
-  background: #e5f7ee;
-  color: var(--color-success);
+  border-color: var(--color-correct);
+  background: var(--color-correct);
+  color: #fff;
 }
 .blank.shake {
   animation: shake 0.35s ease;
@@ -390,6 +399,8 @@ button {
   min-height: 60px;
 }
 .block-chip {
+  max-width: 100%;
+  overflow-wrap: anywhere;
   touch-action: none;
   user-select: none;
   padding: 10px 18px;
@@ -402,12 +413,12 @@ button {
   cursor: grab;
   transition: opacity 0.15s ease, transform 0.15s ease;
 }
-.block-chip:nth-child(3n+2) { background: var(--color-accent); box-shadow: 0 2px 6px rgba(20, 184, 166, 0.35); }
-.block-chip:nth-child(3n) { background: #f59e0b; box-shadow: 0 2px 6px rgba(245, 158, 11, 0.35); }
 .block-chip.dragging { opacity: 0.3; }
 .block-chip.used { display: none; }
 
 .drag-ghost {
+  max-width: calc(100vw - 32px);
+  overflow-wrap: anywhere;
   position: fixed;
   top: 0; left: 0;
   pointer-events: none;
